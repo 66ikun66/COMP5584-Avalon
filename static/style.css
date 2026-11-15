@@ -98,12 +98,13 @@ header {
 
 main {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 390px);
+  grid-template-columns: minmax(520px, 1.8fr) minmax(260px, .85fr);
   grid-template-areas:
     "overview overview"
     "play intel";
   align-items: start;
-  gap: 22px;
+  column-gap: 24px;
+  row-gap: 24px;
   width: min(1500px, calc(100% - 40px));
   margin: 0 auto;
   padding: 30px 0 56px;
@@ -112,10 +113,14 @@ main {
 .overview-strip {
   grid-area: overview;
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(340px, .9fr);
-  gap: 22px;
+  grid-template-columns: minmax(0, 1.8fr) minmax(260px, .85fr);
+  gap: 24px;
 }
-.play-column { grid-area: play; min-height: calc(100vh - 300px); }
+.play-column {
+  grid-area: play;
+  height: calc(100vh - 116px);
+  min-height: 560px;
+}
 .intel-column {
   grid-area: intel;
   position: sticky;
@@ -123,11 +128,17 @@ main {
   height: calc(100vh - 116px);
   min-height: 560px;
   display: grid;
-  grid-template-rows: minmax(0, 1.35fr) minmax(0, .8fr) minmax(0, .8fr);
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
   gap: 20px;
 }
-.player-card, .mission-card { min-width: 0; }
+.overview-strip > .card { min-width: 0; min-height: 100%; }
 .player-card { overflow: hidden; }
+.secret-inline {
+  margin-top: 18px;
+  padding-top: 17px;
+  border-top: 1px solid var(--line);
+}
+.secret-inline h2 { margin-bottom: 13px; }
 .mission-card { display: flex; flex-direction: column; justify-content: center; }
 .section-kicker {
   margin-bottom: 7px;
@@ -156,16 +167,35 @@ main {
 }
 .round-label i { width: 28px; height: 1px; background: var(--line); }
 .action-card {
-  min-height: 330px;
-  padding: 26px 28px 30px;
+  min-height: 250px;
+  margin: 20px -17px -17px;
+  padding: 20px 17px 0;
   border-top: 4px solid var(--teal);
+  border-radius: 0;
+  box-shadow: none;
+}
+.action-card h2 {
+  margin-bottom: 13px;
+  font-size: 16px;
+}
+.action-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 170px;
+  padding-bottom: 17px;
+}
+.play-panel {
+  flex: 1;
+  min-height: 0;
+  padding: 17px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 20px 46px rgba(39, 43, 42, .13);
 }
-.action-card h2 { font-size: 16px; }
-.action-body { display: flex; flex-direction: column; justify-content: center; min-height: 170px; }
-.secret-card { margin-top: auto; }
+.play-panel > h2 { margin: 0 4px 14px; }
 .intel-column .card { min-height: 0; padding: 17px; overflow: hidden; display: flex; flex-direction: column; }
-.chat-card { min-height: 0; display: flex; flex-direction: column; }
 .history-card, .log-card { background: rgba(255, 253, 248, .76); }
 .card {
   position: relative;
@@ -219,7 +249,24 @@ main {
   color: var(--navy);
   background: #e7eeeb;
 }
-.medallion .emblem { width: 27px; height: 27px; }
+.medallion .emblem { position: absolute; right: 3px; bottom: 3px; width: 15px; height: 15px; opacity: .48; }
+.player-avatar-mark {
+  position: relative;
+  z-index: 1;
+  font-family: "Segoe UI Symbol", "Microsoft YaHei", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+.medallion.avatar-0 { color: #355c7d; background: #e4edf3; }
+.medallion.avatar-1 { color: #6c5b7b; background: #eee8f2; }
+.medallion.avatar-2 { color: #4f7c70; background: #e4f0eb; }
+.medallion.avatar-3 { color: #a26769; background: #f5e7e6; }
+.medallion.avatar-4 { color: #92704c; background: #f2eadc; }
+.medallion.avatar-5 { color: #47758a; background: #e2eef2; }
+.medallion.avatar-6 { color: #76608f; background: #ece7f4; }
+.medallion.avatar-7 { color: #5f8064; background: #e5eee5; }
+.medallion.avatar-8 { color: #a15c4f; background: #f5e5e0; }
+.medallion.avatar-9 { color: #65707b; background: #e7eaed; }
 .medallion .seat {
   position: absolute;
   right: -6px;
@@ -266,8 +313,25 @@ main {
 .vote-track { margin-top: 10px; color: var(--muted); font-size: 12px; text-align: center; }
 
 .role-card { text-align: center; }
-.role-roundel { width: 78px; height: 78px; margin: 2px auto 10px; display: grid; place-items: center; border: 2px solid var(--teal); border-radius: 50%; color: var(--teal); background: var(--teal-soft); }
+.role-roundel { position: relative; width: 78px; height: 78px; margin: 2px auto 10px; display: grid; place-items: center; border: 2px solid var(--teal); border-radius: 50%; color: var(--teal); background: var(--teal-soft); }
 .role-roundel .emblem { width: 45px; height: 45px; }
+.role-avatar-mark {
+  position: absolute;
+  right: 3px;
+  bottom: 2px;
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border: 2px solid var(--paper);
+  border-radius: 50%;
+  color: var(--navy);
+  background: #fffdf8;
+  box-shadow: 0 2px 6px rgba(39,43,42,.16);
+  font-family: "Segoe UI Symbol", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+}
 .role-card.side-evil .role-roundel { border-color: var(--coral); color: var(--coral); background: var(--coral-soft); }
 .role-name { color: var(--navy); font-size: 23px; font-weight: 800; }
 .role-name small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; letter-spacing: .12em; }
@@ -309,11 +373,22 @@ header .btn-ghost:hover { background: rgba(255,255,255,.1); }
 
 .chat, .vote-history { min-height: 0; max-height: none; overflow-y: auto; display: flex; flex-direction: column; gap: 9px; padding-right: 3px; }
 .chat { flex: 1; }
-.bubble { display: flex; gap: 9px; padding: 10px; border-left: 3px solid #c49338; border-radius: 8px; background: var(--paper-warm); animation: rise .2s ease both; }
+.play-panel .chat { flex: 1; height: auto; min-height: 260px; }
+.bubble { display: flex; gap: 11px; padding: 10px 12px; border-left: 3px solid #c49338; border-radius: 9px; background: var(--paper-warm); animation: rise .2s ease both; }
 .bubble.me { border-left-color: var(--teal); background: var(--teal-soft); }
 @keyframes rise { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
-.bubble .av { flex: 0 0 auto; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; color: white; background: var(--navy); font-size: 11px; font-weight: 800; }
+.bubble .av { flex: 0 0 auto; width: 34px; height: 34px; display: grid; place-items: center; border: 2px solid rgba(255,255,255,.72); border-radius: 50%; color: white; background: var(--navy); box-shadow: 0 2px 6px rgba(25,51,61,.16); font-family: "Segoe UI Symbol", "Microsoft YaHei", sans-serif; font-size: 17px; font-weight: 700; }
 .bubble.me .av { background: var(--teal); }
+.bubble .avatar-0 { background: #355c7d; }
+.bubble .avatar-1 { background: #6c5b7b; }
+.bubble .avatar-2 { background: #4f7c70; }
+.bubble .avatar-3 { background: #a26769; }
+.bubble .avatar-4 { background: #92704c; }
+.bubble .avatar-5 { background: #47758a; }
+.bubble .avatar-6 { background: #76608f; }
+.bubble .avatar-7 { background: #5f8064; }
+.bubble .avatar-8 { background: #a15c4f; }
+.bubble .avatar-9 { background: #65707b; }
 .bubble .body { min-width: 0; }
 .bubble .who { color: var(--navy); font-size: 12px; font-weight: 800; }
 .bubble .who .ctx { margin-left: 6px; color: var(--muted); font-weight: 400; }
@@ -354,8 +429,10 @@ header .btn-ghost:hover { background: rgba(255,255,255,.1); }
 ::-webkit-scrollbar-thumb { border-radius: 7px; background: #c7d0cc; }
 
 @media (max-width: 1120px) {
-  main { grid-template-columns: 1fr; grid-template-areas: "overview" "play" "intel"; }
-  .overview-strip { grid-template-columns: 1fr 1fr; }
+  main { grid-template-columns: minmax(0, 1.35fr) minmax(260px, .85fr); grid-template-areas: "overview overview" "play intel"; }
+  .overview-strip { grid-template-columns: minmax(0, 1.35fr) minmax(260px, .85fr); }
+  .play-column { height: auto; min-height: 0; }
+  .play-panel { min-height: calc(100vh - 300px); }
   .intel-column { position: static; height: auto; min-height: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; }
   .intel-column .card { min-height: 260px; }
 }
@@ -369,6 +446,7 @@ header .btn-ghost:hover { background: rgba(255,255,255,.1); }
   .intel-column { display: flex; }
   .intel-column .card { min-height: 220px; }
   .round-label { margin-top: 2px; }
+  .play-panel .chat { height: 55vh; min-height: 300px; }
   .action-card { min-height: 220px; padding: 20px; }
   .player-card .players { grid-template-columns: 1fr 1fr; }
   main .col:last-child { display: flex; }

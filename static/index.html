@@ -120,6 +120,10 @@
         <div class="section-kicker">ROSTER / 01</div>
         <h2>圆桌骑士</h2>
         <ul id="players" class="players"></ul>
+        <div class="secret-inline">
+          <h2>你的密令</h2>
+          <div id="private"></div>
+        </div>
       </div>
       <div class="card mission-card">
         <div class="section-kicker">QUEST TRACK / 02</div>
@@ -130,26 +134,21 @@
       </div>
     </section>
 
-    <!-- 主操作区 + 秘密信息 -->
+    <!-- 中央主操作区：发言记录 + 当前操作 -->
     <section class="col play-column">
       <div class="round-label"><span>当前回合</span><i></i><span>实时战局</span></div>
-      <div class="card action-card" id="action-card">
-        <h2 id="action-title">行动区</h2>
-        <div id="action-body" class="action-body"></div>
-      </div>
-
-      <div class="card secret secret-card">
-        <h2>你的密令</h2>
-        <div id="private"></div>
+      <div class="card play-panel">
+        <h2>密谈 · 发言与指控</h2>
+        <div id="chat" class="chat"></div>
+        <div class="action-card" id="action-card">
+          <h2 id="action-title">行动区</h2>
+          <div id="action-body" class="action-body"></div>
+        </div>
       </div>
     </section>
 
-    <!-- 右侧情报区：发言、历史与日志 -->
+    <!-- 右侧情报区：投票历史与日志 -->
     <section class="col intel-column">
-      <div class="card chat-card">
-        <h2>密谈 · 发言与指控</h2>
-        <div id="chat" class="chat"></div>
-      </div>
       <div class="card history-card">
         <h2>投票编年</h2>
         <div id="vote-history" class="vote-history"></div>

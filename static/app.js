@@ -10,6 +10,8 @@ const ROLE_EMBLEM = {
   Merlin: "em-merlin", Percival: "em-percival", LoyalServant: "em-loyal",
   Assassin: "em-assassin", Morgana: "em-morgana", Oberon: "em-oberon",
 };
+const AVATAR_MARKS = ["♞", "♜", "♝", "♛", "⚜", "◈", "✦", "☾", "✧", "⬡"];
+function avatarMark(pid) { return AVATAR_MARKS[pid] || String(pid + 1); }
 function svgUse(id) { return `<svg class="emblem"><use href="#${id}"></use></svg>`; }
 
 let state = null;
@@ -100,10 +102,11 @@ function renderChat() {
   }
   wrap.innerHTML = state.chat.map((c) => {
     const mine = c.pid === state.private.id;
+    const avatar = avatarMark(c.pid);
     const acc = (c.accuse !== null && c.accuse !== undefined)
       ? `<div class="accuse">⮞ 指控 ${playerName(c.accuse)}</div>` : "";
     return `<div class="bubble ${mine ? "me" : ""}">
-      <div class="av">${c.pid + 1}</div>
+      <div class="av avatar-${c.pid}" aria-hidden="true">${avatar}</div>
       <div class="body">
         <div class="who">${c.name}<span class="ctx">第${c.round + 1}轮·第${c.attempt}次</span></div>
         <div class="txt">${escapeHtml(c.text)}</div>${acc}
@@ -161,11 +164,12 @@ function renderPlayers() {
     }
     if (p.is_human) medCls.push("is-human");
     if (p.is_leader) medCls.push("is-leader");
+    medCls.push(`avatar-${p.id}`);
     const crown = p.is_leader ? `<svg class="crown"><use href="#crown"></use></svg>` : "";
 
     li.innerHTML = `
       <div class="${medCls.join(" ")}">
-        ${crown}${svgUse(emblemId)}
+        ${crown}${svgUse(emblemId)}<span class="player-avatar-mark">${avatarMark(p.id)}</span>
         <span class="seat">${p.id + 1}</span>
       </div>
       <div class="pinfo">
@@ -219,7 +223,7 @@ function renderPrivate() {
 
   $("private").innerHTML = `
     <div class="role-card side-${side}">
-      <div class="role-roundel">${svgUse(emblemId)}</div>
+      <div class="role-roundel">${svgUse(emblemId)}<span class="role-avatar-mark">${avatarMark(p.id)}</span></div>
       <div class="role-name">${p.role_cn}<small>${p.role}</small></div>
       <span class="role-side ${side}">${sideCn}</span>
       <div class="info">${p.info_text.join("<br>")}</div>
